@@ -1,22 +1,21 @@
 pipeline {
     agent any
-
+    parameter {
+        string(name: 'target_env', defaultValue: 'staging', decription: 'Target environment to deploy into(dev,taging,lprod)')
+        booloadParam(name: 'run_smoke_tests', defaultValue: true,decription: 'If selected, run smoke tests after deployment')
+    }
     stages {
-        stage('Bandymas main') {
-            when {
-                branch 'main'
-            }
+        stage('Deploy') {
             steps {
-                echo "Bandymas main"
+                echo "Deploying to ${params.target_env} environment..."
             }
         }
-
-        stage('Bandymas test') {
+        stage('Smoke Test') {
             when {
-                branch 'test'
+                expression { params.run_smoke_tests == true }
             }
             steps {
-                echo "Bandymas test"
+                echo "Running smoke tests..."
             }
         }
     }
