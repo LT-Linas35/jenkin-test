@@ -10,7 +10,7 @@ pipeline {
                 expression { params.target_env != 'dev' }
             }
             steps {
-                echo "Deploying to ${params.target_env} environment..."
+                echo "Deploying to dev environment..."
             }
         }
         stage('Deploy to staging') {
@@ -18,7 +18,7 @@ pipeline {
                 expression { params.target_env != 'staging' }
             }
             steps {
-                echo "Deploying to ${params.target_env} environment..."
+                echo "Deploying to staging environment..."
             }
         }
         stage('Deploy to prod') {
@@ -26,7 +26,7 @@ pipeline {
                 expression { params.target_env != 'prod' }
             }
             steps {
-                echo "Deploying to ${params.target_env} environment..."
+                echo "Deploying to prod environment..."
             }
         }
         stage('Smoke Test') {
