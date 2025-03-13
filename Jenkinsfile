@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    parameter {
-        string(name: 'target_env', defaultValue: 'staging', decription: 'Target environment to deploy into(dev,taging,lprod)')
-        booloadParam(name: 'run_smoke_tests', defaultValue: true,decription: 'If selected, run smoke tests after deployment')
+    parameters {
+        string(name: 'target_env', defaultValue: 'staging', description: 'Target environment to deploy into (dev, staging, lprod)')
+        booleanParam(name: 'run_smoke_tests', defaultValue: true, description: 'If selected, run smoke tests after deployment')
     }
     stages {
         stage('Deploy') {
