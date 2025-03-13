@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Bandymas main') {
       when {branch 'main'} steps { echo "Bandymas main" }
-    stage{'Bandymas test') { 
+    stage('Bandymas test') { 
       when {branch 'test'} steps { echo "Bandymas test" }
     }
    }
