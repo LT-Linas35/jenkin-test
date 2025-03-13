@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Bandymas') {
       steps {
-        echo "Bandymas"
+        echo "Bandymas main"
         }
       }
     }
