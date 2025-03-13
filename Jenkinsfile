@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Deploy to dev') {
             when {
-                expression { params.target_env != 'dev' }
+                expression { params.target_env == 'dev' }
             }
             steps {
                 echo "Deploying to dev environment..."
@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Deploy to staging') {
             when {
-                expression { params.target_env != 'staging' }
+                expression { params.target_env == 'staging' }
             }
             steps {
                 echo "Deploying to staging environment..."
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deploy to prod') {
             when {
-                expression { params.target_env != 'prod' }
+                expression { params.target_env == 'prod' }
             }
             steps {
                 echo "Deploying to prod environment..."
