@@ -1,8 +1,8 @@
 pipeline {
   agent any
-  stages() {
-    stage('Bandyma') {
-      steps() {
+  stages {
+    stage('Bandymas') {
+      steps {
         echo Bandymas
         }
       }
