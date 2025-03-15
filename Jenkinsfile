@@ -7,7 +7,7 @@ parameters {
 
 stages {
     stage('Deploy') {
-        script {
+        steps {
             echo "Deploying artifact version ${params.artifact_version}"
         }
     }
