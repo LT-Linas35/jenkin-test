@@ -1,4 +1,5 @@
 pipeline {
+    agent any
 
 parameters {
     string(name: 'artifact_version', defaultValue: '1', description: 'set artifact version')
