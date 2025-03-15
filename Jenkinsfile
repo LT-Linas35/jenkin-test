@@ -16,4 +16,12 @@ pipeline {
     parameters {
         choice(name: 'server_list', choices: getServerList(), description: 'Environment to deploy')
     }
+
+    stages {
+        stage('Deploy') {
+            steps {
+                echo "Deploying to ${params.server_list}"
+            }
+        }
+    }
 }
