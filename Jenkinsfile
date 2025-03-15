@@ -2,23 +2,24 @@ pipeline {
     agent any
 
 parameters {
-    choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Environment to deploy')
+    choice(name: 'server_list', choices: getServerList(), description: 'Environment to deploy')
 }
 
+
+
 stages {
-    stage('Environment') {
+    stage() {
         steps {
             script {
-                if (params.ENV == 'DEV') {
-                    echo 'Deploying to DEV'
-                } else if (params.ENV == 'QA') {
-                    echo 'Deploying to QA'
-                } else if (params.ENV == 'PROD') {
-                    echo 'Deploying to PROD'
-                }
+                def lines = ["pirmas", "antras", "trecias"]
+                writeFile file: 'server_list.txt', text: lines.join('\n')
             }
         }
     }
 }
 
+def getServerList() {
+    def server_list = new File('server_list.txt')
+    return server_list.readLines()
+    }
 }
