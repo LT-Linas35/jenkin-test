@@ -2,13 +2,21 @@ pipeline {
     agent any
 
 parameters {
-    string(name: 'artifact_version', defaultValue: '1', description: 'set artifact version')
+    choice(name: 'ENV', choices: ['DEV', 'QA', 'PROD'], description: 'Environment to deploy')
 }
 
 stages {
-    stage('Deploy') {
+    stage('Environment') {
         steps {
-            echo "Deploying artifact version ${params.artifact_version}"
+            script {
+                if (params.ENV == 'DEV') {
+                    echo 'Deploying to DEV'
+                } else if (params.ENV == 'QA') {
+                    echo 'Deploying to QA'
+                } else if (params.ENV == 'PROD') {
+                    echo 'Deploying to PROD'
+                }
+            }
         }
     }
 }
