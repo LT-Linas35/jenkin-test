@@ -35,5 +35,13 @@ pipeline {
                 }
             }
         }
+
+        stage('Inpect Variables') {
+            steps {
+                script {
+                    sh "printenv"
+                }
+            }
+        }
     }
 }
