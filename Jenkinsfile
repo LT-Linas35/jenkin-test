@@ -1,17 +1,17 @@
 def getServerList() {
-    def serverListFile = new File('server_list.txt')
-    if (serverListFile.exists()) {
-        return serverListFile.readLines()
-    } else {
-        return ["pirmas", "antras", "trecias"]
-    }
+    def server_list = new File('server_list.txt')
+    return server_list.readLines()
 }
 
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'server_list', choices: getServerList(), description: 'Environment to deploy')
+    }
+
     stages {
-        stage('Example') {
+        stage('Test') {
             steps {
                 script {
                     def lines = ["pirmas", "antras", "trecias"]
