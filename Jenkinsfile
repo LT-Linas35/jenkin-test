@@ -1,41 +1,15 @@
 pipeline {
-    agent any
-    parameters {
-        string(name: 'target_env', defaultValue: 'staging', description: 'Target environment to deploy into (dev, staging, prod)')
-        booleanParam(name: 'run_smoke_tests', defaultValue: true, description: 'If selected, run smoke tests after deployment')
-    }
-    stages {
-        stage('Deploy to dev') {
-            when {
-                expression { params.target_env == 'dev' }
-            }
-            steps {
-                echo "Deploying to dev environment..."
-            }
-        }
-        stage('Deploy to staging') {
-            when {
-                expression { params.target_env == 'staging' }
-            }
-            steps {
-                echo "Deploying to staging environment..."
-            }
-        }
-        stage('Deploy to prod') {
-            when {
-                expression { params.target_env == 'prod' }
-            }
-            steps {
-                echo "Deploying to prod environment..."
-            }
-        }
-        stage('Smoke Test') {
-            when {
-                expression { params.run_smoke_tests == true }
-            }
-            steps {
-                echo "Running smoke tests..."
-            }
+
+parameters {
+    string(name: 'artifact_version', defaultValue: '1', description: 'set artifact version')
+}
+
+stages {
+    stage('Deploy') {
+        script {
+            echo "Deploying artifact version ${params.artifact_version}"
         }
     }
+}
+
 }
