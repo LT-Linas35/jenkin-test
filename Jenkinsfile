@@ -2,26 +2,26 @@ pipeline {
     agent any
 
     environment {
-        SERVER_LIST_FILE = 'server_list.txt'
+        REGION_LIST_FILE = 'regions.txt'
     }
 
     stages {
-        stage('Paruošti serverių sąrašą') {
+        stage('Paruošti regionų sąrašą') {
             steps {
                 script {
-                    def lines = ["pirmas", "antras", "trecias"]
-                    writeFile file: SERVER_LIST_FILE, text: lines.join('\n')
-                }
-            }
-        }
+                    // Gauti AWS regionus iš `curl`
+                    def output = sh(script: "curl -s https://raw.githubusercontent.com/aws/aws-sdk-go/main/models/endpoints/endpoints.json | jq -r '.partitions[].regions | keys[]'", returnStdout: true).trim()
+                    
+                    // Konvertuoti išvestį į sąrašą
+                    def server_list = output ? output.split("\n") : []
 
-        stage('Pasirinkimas') {
-            steps {
-                script {
-                    def serverList = readFile(SERVER_LIST_FILE).split('\n')
+                    // Įrašyti regionus į failą (naudinga debug'ui)
+                    writeFile file: REGION_LIST_FILE, text: server_list.join("\n")
+
+                    // Pakeisti pipeline parametrus su `properties([])`
                     properties([
                         parameters([
-                            choice(name: 'server_list', choices: serverList.join("\n"), description: 'Pasirinkite serverį')
+                            choice(name: 'server_list', choices: server_list.join("\n"), description: 'Pasirinkite serverį')
                         ])
                     ])
                 }
@@ -30,7 +30,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying to ${params.server_list}"
+                script {
+                    echo "Deploying to ${params.server_list}"
+                }
             }
         }
     }
