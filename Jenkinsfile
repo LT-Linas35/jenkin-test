@@ -24,14 +24,14 @@ pipeline {
             stage('Test Backend') {
                 steps {
                     dir('backend') {
-                        load Jenkinsfile
+                        load 'Jenkinsfile'
                     }
                 }
             }
             stage('Test Frontend') {
                 steps {
                     dir('frontend') {
-                        load Jenkinsfile
+                        load 'Jenkinsfile'
                     }
                 }
             }
