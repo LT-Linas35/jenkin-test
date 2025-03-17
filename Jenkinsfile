@@ -1,22 +1,23 @@
 pipeline {
     agent any
-
     stages {
-        stage('Bandymas main') {
-            when {
-                branch 'main'
-            }
+        stage('Build Backend') {
             steps {
-                echo "Bandymas main"
+                dir('backend') {
+                    script {
+                        sh 'echo mvn run build'
+                    }
+                }
             }
         }
-
-        stage('Bandymas test') {
-            when {
-                branch 'test'
-            }
+        stage('Build Frontend') {
             steps {
-                echo "Bandymas test"
+                dir('frontend') {
+                    script {
+                        sh 'echo npm install'
+                        sh 'echo npm run build'
+                    }
+                }
             }
         }
     }
