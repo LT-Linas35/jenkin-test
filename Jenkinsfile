@@ -20,5 +20,21 @@ pipeline {
                 }
             }
         }
+        parallel {
+            stage('Test Backend') {
+                steps {
+                    dir('backend') {
+                        load Jenkinsfile
+                    }
+                }
+            }
+            stage('Test Frontend') {
+                steps {
+                    dir('frontend') {
+                        load Jenkinsfile
+                    }
+                }
+            }
+        }
     }
 }
